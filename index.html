@@ -1,1 +1,101 @@
-<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Split It</title><p>Split It</p>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f6f3ee" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#16151a" media="(prefers-color-scheme: dark)">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex">
+<title>Split It</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="banner" class="banner" role="status" hidden>
+  <span id="banner-text"></span>
+  <button id="banner-retry" type="button" class="link">Retry now</button>
+</div>
+
+<div id="app">
+  <section id="v-loading" class="center" aria-live="polite">
+    <div class="spinner" aria-hidden="true"></div>
+    <p>Opening the split&hellip;</p>
+  </section>
+
+  <section id="v-error" class="center" hidden>
+    <h1 id="err-title"></h1>
+    <p id="err-body" class="muted"></p>
+    <button id="err-retry" type="button" class="btn primary" hidden>Try again</button>
+  </section>
+
+  <section id="v-name" class="pad" hidden>
+    <p class="eyebrow" id="name-eyebrow"></p>
+    <h1 id="name-title"></h1>
+    <form id="name-form" novalidate>
+      <label for="name-input" class="label">What's your name?</label>
+      <input id="name-input" class="input" type="text" maxlength="80" autocomplete="given-name" autocapitalize="words" enterkeyhint="go" required>
+      <p id="name-error" class="field-error" role="alert" hidden></p>
+      <button type="submit" class="btn primary block" id="name-go">Join the split</button>
+    </form>
+    <div id="name-existing" hidden>
+      <p class="muted small">Already at the table? Tap your name.</p>
+      <div id="name-chips" class="chips"></div>
+    </div>
+  </section>
+
+  <section id="v-main" hidden>
+    <header class="pad head">
+      <div>
+        <p class="eyebrow" id="main-eyebrow"></p>
+        <h1 id="main-title"></h1>
+      </div>
+      <p class="whoami"><span id="whoami"></span> <button type="button" class="link" id="not-you">Not you?</button></p>
+    </header>
+    <nav class="pad who" aria-label="Who are you tapping for?">
+      <p class="small muted" id="who-label">Tapping for</p>
+      <div class="chips" id="who-chips"></div>
+    </nav>
+    <div class="tabs pad" role="group" aria-label="View">
+      <button type="button" class="tab" id="tab-items" data-tab="items">Items</button>
+      <button type="button" class="tab" id="tab-totals" data-tab="totals">Totals &amp; pay</button>
+    </div>
+    <main id="panel" class="pad" tabindex="-1"></main>
+    <footer id="bar" class="bar">
+      <div>
+        <p class="small muted" id="bar-label"></p>
+        <p class="bar-total" id="bar-total"></p>
+      </div>
+      <button type="button" class="btn primary" id="bar-go">See total &amp; pay</button>
+    </footer>
+  </section>
+</div>
+
+<footer class="legal">
+  <a href="terms.html">Terms</a> &middot; <a href="privacy.html">Privacy</a>
+</footer>
+
+<dialog id="add-dialog" aria-labelledby="add-title">
+  <form id="add-form" method="dialog" novalidate>
+    <h2 id="add-title">Add a person</h2>
+    <p class="muted small">Friend without a phone? Add them, then tap their items for them.</p>
+    <label for="add-input" class="label">Their name</label>
+    <input id="add-input" class="input" type="text" maxlength="80" autocapitalize="words" enterkeyhint="done" required>
+    <p id="add-error" class="field-error" role="alert" hidden></p>
+    <div class="row">
+      <button type="button" class="btn" id="add-cancel">Cancel</button>
+      <button type="submit" class="btn primary" id="add-go">Add</button>
+    </div>
+  </form>
+</dialog>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
+<script src="config.js"></script>
+<script src="split.js"></script>
+<script src="pay.js"></script>
+<script src="api.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
