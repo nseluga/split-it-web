@@ -20,7 +20,8 @@
       join: async (t, name) => (await rpc('join_split', { p_token: t, p_name: name })).participant_id,
       setClaim: (t, pid, itemId, claimed) => rpc('set_claim', { p_token: t, p_participant_id: pid, p_item_id: itemId, p_claimed: claimed }),
       subscribe(t, cb) {
-        const ch = sb.channel('split:' + t).on('broadcast', { event: 'changed' }, cb).subscribe();
+        // refetch on every (re)subscribe too: a change that landed while not subscribed was never delivered
+        const ch = sb.channel('split:' + t).on('broadcast', { event: 'changed' }, cb).subscribe((st) => { if (st === 'SUBSCRIBED') cb(); });
         return () => sb.removeChannel(ch);
       },
     };
